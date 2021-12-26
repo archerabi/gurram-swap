@@ -1,11 +1,12 @@
 # Gurram swap
 > Typescript library for interacting with the uniswap V3 subgraphs. 
 
-[![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![Downloads Stats][npm-downloads]][npm-url]
+<!-- [![NPM Version][npm-image]][npm-url] -->
+<!-- [![Build Status][travis-image]][travis-url] -->
+<!-- [![Downloads Stats][npm-downloads]][npm-url] -->
 
 Gurram swap is a library for querying the uniswap v3 subgraph. It supports the Ethereum mainnet as wells as L2 networks like Polygon and Optimism.
+This library also injects summaries for positions. 
 
 ![](header.png)
 
@@ -51,4 +52,3 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 [npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square
 [travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
-[wiki]: https://github.com/yourname/yourproject/wiki

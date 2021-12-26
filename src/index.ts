@@ -1,11 +1,13 @@
+export { Unigraph } from "./unigraph";
 export {
-  Pool,
-  PoolDayData,
-  Position,
   PositionSummary,
+  Position,
+  PoolDayData,
+  Pool,
+  Transaction,
+  Tick,
   Token,
-  Unigraph,
-} from "./uniswap";
+} from "./graph/types";
 export { clients } from "./clients";
 export {
   EthereumNetworkName,

@@ -1,14 +1,14 @@
-import { EthereumNetworkName } from "../types";
-import { Unigraph } from "./uniswap";
+import { EthereumNetworkName } from "./network";
+import { Unigraph } from "./unigraph";
 
-const mainnetClient = new Unigraph(EthereumNetworkName.Mainnet);
-const optimismClient = new Unigraph(EthereumNetworkName.Optimism);
-const polygonClient = new Unigraph(EthereumNetworkName.Polygon);
+const mainnetClient = new Unigraph({ network: EthereumNetworkName.Mainnet });
+const optimismClient = new Unigraph({ network: EthereumNetworkName.Optimism });
+const polygonClient = new Unigraph({ network: EthereumNetworkName.Polygon });
 
 const clients = {
   [EthereumNetworkName.Mainnet]: mainnetClient,
   [EthereumNetworkName.Optimism]: optimismClient,
-  [EthereumNetworkName.Polygon]: polygonClient
+  [EthereumNetworkName.Polygon]: polygonClient,
 };
 
 export { clients };
