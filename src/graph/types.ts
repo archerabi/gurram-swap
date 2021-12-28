@@ -1,32 +1,32 @@
 import { BigNumber } from "bignumber.js";
 type Token = {
-  symbol: string;
-  totalValueLocked: BigNumber;
-  totalValueLockedUSD: BigNumber;
-  decimals: number;
+  symbol?: string;
+  totalValueLocked?: BigNumber;
+  totalValueLockedUSD?: BigNumber;
+  decimals?: number;
 };
 
 type Transaction = {
   timestamp: Date;
 };
 type PoolDayData = {
-  date: number;
-  feesUSD: number;
-  tvlUSD: number;
-  volumeUSD: number;
+  date?: number;
+  feesUSD?: number;
+  tvlUSD?: number;
+  volumeUSD?: number;
 };
 
 type Pool = {
-  id: string;
-  token0: Token;
-  token1: Token;
-  feeTier: number;
+  id?: string;
+  token0?: Token;
+  token1?: Token;
+  feeTier?: number;
   poolDayData?: PoolDayData[];
-  token0Price: BigNumber;
-  token1Price: BigNumber;
-  feeGrowthGlobal0X128: BigNumber;
-  feeGrowthGlobal1X128: BigNumber;
-  sqrtPrice: BigNumber;
+  token0Price?: BigNumber;
+  token1Price?: BigNumber;
+  feeGrowthGlobal0X128?: BigNumber;
+  feeGrowthGlobal1X128?: BigNumber;
+  sqrtPrice?: BigNumber;
 };
 
 type Tick = {
