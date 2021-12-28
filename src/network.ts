@@ -16,10 +16,10 @@ enum EthereumNetworkName {
     [EthereumNetworkName.Mainnet]: {
       name: EthereumNetworkName.Mainnet,
       uniswapV3GraphApiUrl:
-        "https://api.thegraph.com/subgraphs/name/ianlapham/uniswap-v3-subgraph",
+        "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3",
     },
     [EthereumNetworkName.Optimism]: {
-      name: EthereumNetworkName.Mainnet,
+      name: EthereumNetworkName.Optimism,
       uniswapV3GraphApiUrl:
         "https://api.thegraph.com/subgraphs/name/ianlapham/uniswap-optimism-dev",
     },
