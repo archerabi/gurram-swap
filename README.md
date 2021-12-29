@@ -1,4 +1,4 @@
-# Gurram swap [![NPM Version][npm-image]][npm-url]
+# Gurram swap [![NPM Version][npm-image]][npm-url][license-url]
 > Typescript library for interacting with the uniswap V3 subgraphs. 
 
 
@@ -17,7 +17,7 @@ npm install gurram-swap --save
 ```
 
 ## Usage example
-```
+```typescript
 // Use the provided clients
 import { clients, EthereumNetworkName } from "gurram-swap";
 const client = await clients[EthereumNetworkName.Mainnet];
@@ -28,6 +28,10 @@ const client = new Unigraph(network);
 
 // get first 100 pools
 const results = await graph.getPairs(100);
+
+// get summaries for positions
+const positions = await graph.getPositions({ address: "0xaddress", summaries: true});
+
 
 ``` 
 
@@ -52,3 +56,4 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 [npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square
 [travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
+[license-url]: https://img.shields.io//npm/l/gurram-swap
