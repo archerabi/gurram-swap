@@ -13,7 +13,7 @@
             ],
             "runtimeExecutable": "npx",
             "program": "jest",
-            "args": ["tests/unigraph.test.ts"],
+            "args": ["${file}"],
             // "preLaunchTask": "tsc: build - tsconfig.json",
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"
