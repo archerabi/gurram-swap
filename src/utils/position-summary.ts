@@ -2,6 +2,9 @@ import BigNumber from "bignumber.js";
 import { Token, Position } from "..";
 
 const getDecimals = (token: Token) => {
+  if(token.decimals) {
+    return token.decimals;
+  }
   return token.symbol === "USDC" ? 6 : 18;
 };
 
@@ -28,6 +31,7 @@ export function setSummary(position: Position) {
   const token1ValueLockedUSD = token1PriceUSD.multipliedBy(
     position.depositedToken1
   );
+
   const feesToken0 = feeGrowthGlobal0X128
     .minus(feeGrowthOutside0X128_lower)
     .minus(feeGrowthOutside0X128_upper)

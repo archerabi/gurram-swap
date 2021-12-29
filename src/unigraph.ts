@@ -3,7 +3,6 @@ import {
   UniswapV3ConfigurationMap,
   UniswapV3Configuration,
 } from "./network";
-import * as R from "ramda";
 import { Pool, Position } from "./graph/types";
 import { setSummary } from "./utils/position-summary";
 import { gql, GraphQLClient } from "graphql-request";
@@ -43,18 +42,18 @@ class Unigraph {
     const result = await this.client.request<{ positions: Position[] }>(
       gql`
         ${positionsForAddress}
-      `
+      `,
+      {address}
     );
-    // if (!result.error) {
+    const positions = result.positions.map(p => getMapper<Position>('Position')(p));
     if (!summaries) {
-      return result.positions;
+      return positions;
     }
     // TODO: find a better way
-    const _result = clone(result);
-    _result.positions.forEach(setSummary);
-    return _result;
+    // const _result = clone(result);
+    positions.forEach(setSummary);
+    return positions;
     // }
-    return result;
   }
 
   public async getPairs(pageSize: number) {

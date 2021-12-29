@@ -106,6 +106,11 @@ const TypeFieldParsers = {
   Position: {
     root: mappers.Position,
     fields: {
+      tickLower: mappers.Tick,
+      tickUpper: mappers.Tick,
+      pool: mappers.Pool,
+      token0: mappers.Token,
+      token1: mappers.Token,
       collectedFeesToken0: read,
       collectedFeesToken1: read,
       liquidity: read,
