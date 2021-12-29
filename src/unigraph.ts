@@ -7,8 +7,6 @@ import { Pool, Position } from "./graph/types";
 import { setSummary } from "./utils/position-summary";
 import { gql, GraphQLClient } from "graphql-request";
 
-const { clone } = R;
-
 // graphql
 import poolsGet from "./graph/templates/pools-get";
 import positionsForAddress from "./graph/templates/positions-for-address";
