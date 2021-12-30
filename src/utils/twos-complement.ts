@@ -9,15 +9,20 @@ export function fromTwosComplement(value: BigNumber | string, width: number) {
   }
   let binary = value.toString(2);
   //pad width
-  binary = binary.padStart(width, '0');
-  if(binary.charAt(0) === '0'){
+  binary = binary.padStart(width, "0");
+  if (binary.charAt(0) === "0") {
+    // not a negative number, return as is
     return _value;
   }
-  let flipped = '';
-  for(var i = 0; i< binary.length; i++) {
-    flipped = flipped.concat(binary[i] === '0' ? '1' : '0');
+  const charArray = Array.from(binary);
+  for (var i = 0; i < charArray.length; i++) {
+    if (charArray[i] === "0") {
+      charArray[i] = "1";
+    } else {
+      charArray[i] = "0";
+    }
   }
-  let final = new BigNumber(flipped,2);
+  let final = new BigNumber(charArray.join(''), 2);
 
   return final.plus(1).multipliedBy(-1);
 }
