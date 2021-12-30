@@ -1,0 +1,13 @@
+{
+    "data": {
+      "position": {
+        "id": "1",
+        "pool": {
+          "id": "0x0e44ceb592acfc5d3f09d996302eb4c499ff8c10"
+        },
+        "token0": {
+          "symbol": "USDC"
+        }
+      }
+    }
+  }

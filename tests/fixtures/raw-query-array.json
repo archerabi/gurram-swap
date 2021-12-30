@@ -1,0 +1,51 @@
+{
+    "data": {
+      "pools": [
+        {
+          "id": "0x00b15004f026994582c07777ca837c535b2fcd88",
+          "token0": {
+            "symbol": "WETH"
+          },
+          "token1": {
+            "symbol": "GIL"
+          }
+        },
+        {
+          "id": "0x00ca8e06bafa2fc1e079ec86d50f5248e7a6f7a8",
+          "token0": {
+            "symbol": "WETH"
+          },
+          "token1": {
+            "symbol": "VALX"
+          }
+        },
+        {
+          "id": "0x020a70498c78d46903aa293354614407c4c68325",
+          "token0": {
+            "symbol": "USDC"
+          },
+          "token1": {
+            "symbol": "B-52"
+          }
+        },
+        {
+          "id": "0x0271b5b14e2fd067b01127906a56e8ba0228b137",
+          "token0": {
+            "symbol": "WMATIC"
+          },
+          "token1": {
+            "symbol": "RIC"
+          }
+        },
+        {
+          "id": "0x0312692e9cadd3ddaace2e112a4e36397bd2f18a",
+          "token0": {
+            "symbol": "SUSHI"
+          },
+          "token1": {
+            "symbol": "WETH"
+          }
+        }
+      ]
+    }
+  }

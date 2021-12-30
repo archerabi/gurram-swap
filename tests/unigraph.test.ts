@@ -1,6 +1,7 @@
 import {
   EthereumNetworkName,
   Pool,
+  Position,
   Unigraph,
   UniswapV3ConfigurationMap,
 } from "../src";
@@ -8,6 +9,9 @@ import BigNumber from "bignumber.js";
 import { fetch, Response } from "cross-fetch";
 import PoolsMock from "./fixtures/pools.json";
 import PositionMock from './fixtures/positions.json';
+import RawQuerySingleMock from './fixtures/raw-query-single.json';
+import RawQueryArrayMock from './fixtures/raw-query-array.json';
+
 
 const mockFetch = jest.fn(fetch);
 
@@ -42,7 +46,6 @@ describe("unigraph", () => {
     expect(tvlUSD).toEqual(new BigNumber("333247387.1628763997406155332531935")),
     expect(volumeUSD).toEqual(new BigNumber("216937.9441165135625359201238066997"));
 
-    mockFetch.mockReset();
   });
 
   it('fetches positions', async() => {
@@ -63,4 +66,64 @@ describe("unigraph", () => {
     expect(firstPosition.tickLower.tickIdx).toEqual(-267150);
     expect(firstPosition.tickUpper.tickIdx).toEqual(-265880);
   });
+
+  it('fetches graph object with raw query', async ()=> {
+    mockFetch.mockResolvedValue(
+      new Response(JSON.stringify(RawQuerySingleMock), {
+        headers: { "Content-Type": "application/json" },
+        status: 200,
+        statusText: "ok",
+      })
+    );
+    const query = `
+    query {
+      position(id:"1"){
+        id
+        token0{
+          symbol
+        }
+        pool {
+          id
+        }
+        
+      }
+    }
+    `
+    const position = await underTest.rawQuery<Position>(query, {}, 'Position' );
+    expect(position.id).toEqual("1");
+    expect(position.pool.id).toEqual("0x0e44ceb592acfc5d3f09d996302eb4c499ff8c10")
+  })  
+
+  it('fetches graph object array with raw query', async ()=> {
+    mockFetch.mockResolvedValue(
+      new Response(JSON.stringify(RawQueryArrayMock), {
+        headers: { "Content-Type": "application/json" },
+        status: 200,
+        statusText: "ok",
+      })
+    );
+    const query = `
+    query {
+      pools(first: 5){
+        id
+        token0{
+          symbol
+        }
+        token1{
+          symbol
+        }
+        
+      }
+    }
+    `
+    const pools = await underTest.rawQuery<Pool[]>(query, {}, 'Pool' );
+    expect(pools.length).toEqual(5);
+    const [firstPool] = pools;
+    expect(firstPool.id).toEqual("0x00b15004f026994582c07777ca837c535b2fcd88");
+    expect(firstPool.token0.symbol).toEqual("WETH");
+  })  
+
+  afterEach(() => {
+    mockFetch.mockReset();
+  })
 });

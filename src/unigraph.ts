@@ -3,7 +3,7 @@ import {
   UniswapV3ConfigurationMap,
   UniswapV3Configuration,
 } from "./network";
-import { Pool, Position } from "./graph/types";
+import { GraphObjects, Pool, Position } from "./graph/types";
 import { setSummary } from "./utils/position-summary";
 import { gql, GraphQLClient } from "graphql-request";
 
@@ -62,6 +62,18 @@ class Unigraph {
       { pageSize }
     );
     return result.pools.map((pool) => getMapper<Pool>("Pool")(pool));
+  }
+
+  public async rawQuery<T>(query: string, variables: any, mapper: GraphObjects): Promise<T> {
+    const result = await this.client.request<T>(
+      gql`${query}`,
+      variables
+    );
+    const [firstKey] = Object.keys(result)
+    if( result[firstKey] instanceof Array) {
+      return result[firstKey].map(o => getMapper<T>(mapper)(o));  
+    }
+    return getMapper<T>(mapper)(result[firstKey]);
   }
 }
 

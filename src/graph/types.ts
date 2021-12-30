@@ -72,6 +72,8 @@ type PositionSummary = {
   token1Amount: BigNumber;
 };
 
+type GraphObjects = 'Token' | 'Pool' | 'PoolDayData' | 'Tick' | 'Position' | 'Transaction';
+
 export type {
   Token,
   Pool,
@@ -80,4 +82,5 @@ export type {
   PositionSummary,
   Transaction,
   Tick,
+  GraphObjects
 };

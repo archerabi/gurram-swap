@@ -1,7 +1,6 @@
 import BigNumber from "bignumber.js";
-import { Pool, Position, Tick, Token, Transaction } from "./types";
+import { Pool, Position, Tick, Token, Transaction, PoolDayData, GraphObjects } from "./types";
 import { fromTwosComplement } from "../utils/twos-complement";
-import { PoolDayData } from "..";
 
 function read(val: string) {
   return new BigNumber(val);
@@ -16,13 +15,7 @@ function readSigned256(val: string) {
 }
 
 function createMapper<T>(
-  mapperType:
-    | "Pool"
-    | "Token"
-    | "PoolDayData"
-    | "Position"
-    | "Tick"
-    | "Transaction"
+  mapperType: GraphObjects
 ) {
   return (source: T) => {
     const mapped = {};
