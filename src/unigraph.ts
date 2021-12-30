@@ -41,9 +41,11 @@ class Unigraph {
       gql`
         ${positionsForAddress}
       `,
-      {address}
+      { address }
     );
-    const positions = result.positions.map(p => getMapper<Position>('Position')(p));
+    const positions = result.positions.map((p) =>
+      getMapper<Position>("Position")(p)
+    );
     if (!summaries) {
       return positions;
     }
@@ -54,7 +56,7 @@ class Unigraph {
     // }
   }
 
-  public async getPairs(pageSize: number) {
+  public async getPairs({ pageSize }: { pageSize: number }) {
     const result = await this.client.request<{ pools: Pool[] }>(
       gql`
         ${poolsGet}
@@ -64,14 +66,30 @@ class Unigraph {
     return result.pools.map((pool) => getMapper<Pool>("Pool")(pool));
   }
 
-  public async rawQuery<T>(query: string, variables: any, mapper: GraphObjects): Promise<T> {
+  /**
+   * Execute a custom Graphql query.
+   * @param {string} query - the Graphql query
+   * @param {string: any} variables -variables for the query if any
+   * @param {GraphObjects} mapper - the mapper for the root object.
+   * */
+  public async rawQuery<T>({
+    query,
+    variables,
+    mapper,
+  }: {
+    query: string;
+    variables?: { string: any };
+    mapper: GraphObjects;
+  }): Promise<T> {
     const result = await this.client.request<T>(
-      gql`${query}`,
+      gql`
+        ${query}
+      `,
       variables
     );
-    const [firstKey] = Object.keys(result)
-    if( result[firstKey] instanceof Array) {
-      return result[firstKey].map(o => getMapper<T>(mapper)(o));  
+    const [firstKey] = Object.keys(result);
+    if (result[firstKey] instanceof Array) {
+      return result[firstKey].map((o) => getMapper<T>(mapper)(o));
     }
     return getMapper<T>(mapper)(result[firstKey]);
   }

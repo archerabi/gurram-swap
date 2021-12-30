@@ -33,6 +33,23 @@ const results = await graph.getPairs(100);
 // get summaries for positions
 const positions = await graph.getPositions({ address: "0xaddress", summaries: true});
 
+// Custom graphql query
+
+const query = `
+    query {
+      pools(first: 5){
+        id
+        token0{
+          symbol
+        }
+        token1{
+          symbol
+        }
+        
+      }
+    }
+    `;
+const pools = await underTest.rawQuery<Pool[]>({ query, mapper: "Pool" });
 
 ``` 
 
