@@ -1,4 +1,5 @@
-# Gurram swap [![NPM Version][npm-image]][npm-url][license-url]
+# Gurram swap [![NPM Version][npm-image]![License][license-url]]
+
 > Typescript library for interacting with the uniswap V3 subgraphs. 
 
 
@@ -56,4 +57,4 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 [npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square
 [travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
-[license-url]: https://img.shields.io//npm/l/gurram-swap
+[license-url]: https://img.shields.io/npm/l/gurram-swap
