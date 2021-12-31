@@ -13,6 +13,23 @@ type PositionSummary = {
   token1Amount: BigNumber;
 };
 
+type TokenDayData = {
+  id: string;
+  date: Date;
+  token: Token;
+  volume: BigNumber;
+  volumeUSD: BigNumber;
+  untrackedVolumeUSD: BigNumber;
+  totalValueLocked: BigNumber;
+  totalValueLockedUSD: BigNumber;
+  priceUSD: BigNumber;
+  feesUSD: BigNumber;
+  open: BigNumber;
+  high: BigNumber;
+  low: BigNumber;
+  close: BigNumber;
+};
+
 type Token = {
   symbol?: string;
   totalValueLocked?: BigNumber;
@@ -41,6 +58,32 @@ type Pool = {
   feeGrowthGlobal0X128?: BigNumber;
   feeGrowthGlobal1X128?: BigNumber;
   sqrtPrice?: BigNumber;
+  createdAtTimestamp: Date;
+  createdAtBlockNumber: number;
+  tick: number;
+  observationIndex: number;
+  volumeToken0: BigNumber;
+  volumeToken1: BigNumber;
+  volumeUSD: BigNumber;
+  untrackedVolumeUSD: BigNumber;
+  feesUSD: BigNumber;
+  txCount: number;
+  collectedFeesToken0: BigNumber;
+  collectedFeesToken1: BigNumber;
+  collectedFeesUSD: BigNumber;
+  totalValueLockedToken0: BigNumber;
+  totalValueLockedToken1: BigNumber;
+  totalValueLockedETH: BigNumber;
+  totalValueLockedUSD: BigNumber;
+  totalValueLockedUSDUntracked: BigNumber;
+  liquidityProviderCount: number;
+  // TODO
+  // poolHourData: [PoolHourData!]!
+  // mints: [Mint!]!
+  // burns: [Burn!]!
+  // swaps: [Swap!]!
+  // collects: [Collect!]!
+  // ticks: [Tick!]!
 };
 
 type Tick = {
@@ -79,7 +122,8 @@ type GraphObjects =
   | 'PoolDayData'
   | 'Tick'
   | 'Position'
-  | 'Transaction';
+  | 'Transaction'
+  | 'TokenDayData';
 
 export type {
   Token,
@@ -89,5 +133,6 @@ export type {
   PositionSummary,
   Transaction,
   Tick,
+  TokenDayData,
   GraphObjects,
 };

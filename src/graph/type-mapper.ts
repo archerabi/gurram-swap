@@ -1,6 +1,13 @@
 import BigNumber from 'bignumber.js';
 import {
-  Pool, Position, Tick, Token, Transaction, PoolDayData, GraphObjects,
+  Pool,
+  Position,
+  Tick,
+  Token,
+  Transaction,
+  PoolDayData,
+  GraphObjects,
+  TokenDayData,
 } from './types';
 import { fromTwosComplement } from '../utils/twos-complement';
 
@@ -16,9 +23,7 @@ function readSigned256(val: string) {
   return fromTwosComplement(new BigNumber(val), 256);
 }
 
-function createMapper<T>(
-  mapperType: GraphObjects,
-) {
+function createMapper<T>(mapperType: GraphObjects) {
   return (source: T) => {
     const mapped = {};
     for (const [key, value] of Object.entries(source)) {
@@ -39,6 +44,7 @@ const mappers = {
   Position: createMapper<Position>('Position'),
   Tick: createMapper<Tick>('Tick'),
   Transaction: createMapper<Transaction>('Transaction'),
+  TokenDayData: createMapper<TokenDayData>('TokenDayData'),
 };
 
 export function getMapper<Type extends Pool | Token | Position>(
@@ -54,6 +60,34 @@ const TypeFieldParsers = {
       totalValueLocked: read,
       totalValueLockedUSD: read,
       decimals: readNumber,
+      totalSupply: read,
+      volume: read,
+      volumeUSD: read,
+      untrackedVolumeUSD: read,
+      feesUSD: read,
+      txCount: readNumber,
+      poolCount: readNumber,
+      totalValueLockedUSDUntracked: read,
+      derivedETH: read,
+      whitelistPools: (val: Pool[]) => val.map(mappers.Pool),
+      tokenDayData: (val: TokenDayData[]) => val.map(mappers.TokenDayData),
+    },
+  },
+  TokenDayData: {
+    root: () => {},
+    fields: {
+      token: mappers.Token,
+      volume: read,
+      volumeUSD: read,
+      untrackedVolumeUSD: read,
+      totalValueLocked: read,
+      totalValueLockedUSD: read,
+      priceUSD: read,
+      feesUSD: read,
+      open: read,
+      high: read,
+      low: read,
+      close: read,
     },
   },
   Transaction: {
@@ -88,6 +122,24 @@ const TypeFieldParsers = {
       token0: mappers.Token,
       token1: mappers.Token,
       feeTier: readNumber,
+      createdAtBlockNumber: readNumber,
+      tick: readNumber,
+      observationIndex: readNumber,
+      volumeToken0: read,
+      volumeToken1: read,
+      volumeUSD: read,
+      untrackedVolumeUSD: read,
+      feesUSD: read,
+      txCount: readNumber,
+      collectedFeesToken0: read,
+      collectedFeesToken1: read,
+      collectedFeesUSD: read,
+      totalValueLockedToken0: read,
+      totalValueLockedToken1: read,
+      totalValueLockedETH: read,
+      totalValueLockedUSD: read,
+      totalValueLockedUSDUntracked: read,
+      liquidityProviderCount: readNumber,
     },
   },
   PoolDayData: {

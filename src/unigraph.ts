@@ -73,7 +73,7 @@ class Unigraph {
    * Execute a custom Graphql query.
    * @param {string} query - the Graphql query
    * @param {string: any} variables -variables for the query if any
-   * @param {GraphObjects} mapper - the mapper for the root object.
+   * @param {GraphObjects} mapper - the mapper name for the root object.
    * */
   public async rawQuery<T>({
     query,
