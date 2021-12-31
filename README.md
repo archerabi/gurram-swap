@@ -6,8 +6,11 @@
 <!-- [![Build Status][travis-image]][travis-url] -->
 <!-- [![Downloads Stats][npm-downloads]][npm-url] -->
 
-Gurram swap is a library for querying the uniswap v3 subgraph. It supports the Ethereum mainnet as wells as L2 networks like Polygon and Optimism.
-This library also injects summaries for positions. 
+Gurram swap is a library for querying the uniswap v3 subgraph. 
+* It supports the Ethereum mainnet as wells as L2 networks like Polygon and Optimism.
+* injects summaries for positions (liquidity in fiat, uncollected fees etc).
+* uses bignumber.js to represent big numbers. Handles two's complement where necessary. 
+
 
 ![](header.png)
 
