@@ -31,7 +31,7 @@ const network = EthereumNetworkName.Polygon;
 const client = new Unigraph(network);
 
 // get first 100 pools
-const results = await graph.getPairs(100);
+const results = await graph.getPairs({ pageSize: 100});
 
 // get summaries for positions
 const positions = await graph.getPositions({ address: "0xaddress", summaries: true});
