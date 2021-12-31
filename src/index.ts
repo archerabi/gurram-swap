@@ -1,4 +1,4 @@
-export { Unigraph } from "./unigraph";
+export { Unigraph } from './unigraph';
 export {
   PositionSummary,
   Position,
@@ -7,10 +7,10 @@ export {
   Transaction,
   Tick,
   Token,
-} from "./graph/types";
-export { clients } from "./clients";
+} from './graph/types';
+export { clients } from './clients';
 export {
   EthereumNetworkName,
   UniswapV3Configuration,
   UniswapV3ConfigurationMap,
-} from "./network";
+} from './network';

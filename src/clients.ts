@@ -1,5 +1,5 @@
-import { EthereumNetworkName } from "./network";
-import { Unigraph } from "./unigraph";
+import { EthereumNetworkName } from './network';
+import { Unigraph } from './unigraph';
 
 const mainnetClient = new Unigraph({ network: EthereumNetworkName.Mainnet });
 const optimismClient = new Unigraph({ network: EthereumNetworkName.Optimism });

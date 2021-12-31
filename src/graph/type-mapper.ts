@@ -1,13 +1,15 @@
-import BigNumber from "bignumber.js";
-import { Pool, Position, Tick, Token, Transaction, PoolDayData, GraphObjects } from "./types";
-import { fromTwosComplement } from "../utils/twos-complement";
+import BigNumber from 'bignumber.js';
+import {
+  Pool, Position, Tick, Token, Transaction, PoolDayData, GraphObjects,
+} from './types';
+import { fromTwosComplement } from '../utils/twos-complement';
 
 function read(val: string) {
   return new BigNumber(val);
 }
 
 function readNumber(val: string) {
-  return Number.parseInt(val);
+  return Number.parseInt(val, 10);
 }
 
 function readSigned256(val: string) {
@@ -15,7 +17,7 @@ function readSigned256(val: string) {
 }
 
 function createMapper<T>(
-  mapperType: GraphObjects
+  mapperType: GraphObjects,
 ) {
   return (source: T) => {
     const mapped = {};
@@ -31,16 +33,16 @@ function createMapper<T>(
 }
 
 const mappers = {
-  Pool: createMapper<Pool>("Pool"),
-  Token: createMapper<Token>("Token"),
-  PoolDayData: createMapper<PoolDayData>("PoolDayData"),
-  Position: createMapper<Position>("Position"),
-  Tick: createMapper<Tick>("Tick"),
-  Transaction: createMapper<Transaction>("Transaction"),
+  Pool: createMapper<Pool>('Pool'),
+  Token: createMapper<Token>('Token'),
+  PoolDayData: createMapper<PoolDayData>('PoolDayData'),
+  Position: createMapper<Position>('Position'),
+  Tick: createMapper<Tick>('Tick'),
+  Transaction: createMapper<Transaction>('Transaction'),
 };
 
 export function getMapper<Type extends Pool | Token | Position>(
-  key: keyof typeof mappers
+  key: keyof typeof mappers,
 ): (source: Type) => Type {
   return mappers[key] as any as (Type) => Type;
 }
@@ -59,7 +61,7 @@ const TypeFieldParsers = {
     fields: {
       timestamp: {
         read(timestamp: string) {
-          return new Date(Number.parseInt(timestamp) * 1000);
+          return new Date(Number.parseInt(timestamp, 10) * 1000);
         },
       },
     },

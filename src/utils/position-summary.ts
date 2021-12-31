@@ -1,48 +1,48 @@
-import BigNumber from "bignumber.js";
-import { Token, Position } from "..";
+import BigNumber from 'bignumber.js';
+import { Token, Position } from '../graph/types';
 
 const getDecimals = (token: Token) => {
-  if(token.decimals) {
+  if (token.decimals) {
     return token.decimals;
   }
-  return token.symbol === "USDC" ? 6 : 18;
+  return token.symbol === 'USDC' ? 6 : 18;
 };
 
-export function setSummary(position: Position) {
-  const feeGrowthOutside0X128_lower = position.tickLower.feeGrowthOutside0X128;
-  const feeGrowthOutside1X128_lower = position.tickLower.feeGrowthOutside1X128;
-  const feeGrowthOutside0X128_upper = position.tickUpper.feeGrowthOutside0X128;
-  const feeGrowthOutside1X128_upper = position.tickUpper.feeGrowthOutside1X128;
-  const feeGrowthGlobal0X128 = position.pool.feeGrowthGlobal0X128;
-  const feeGrowthGlobal1X128 = position.pool.feeGrowthGlobal1X128;
-  const feeGrowthInside0LastX128 = position.feeGrowthInside0LastX128;
-  const feeGrowthInside1LastX128 = position.feeGrowthInside1LastX128;
+export function getSummary(position: Position) {
+  const feeGrowthOutside0X128Lower = position.tickLower.feeGrowthOutside0X128;
+  const feeGrowthOutside1X128Lower = position.tickLower.feeGrowthOutside1X128;
+  const feeGrowthOutside0X128Upper = position.tickUpper.feeGrowthOutside0X128;
+  const feeGrowthOutside1X128Upper = position.tickUpper.feeGrowthOutside1X128;
+  const { feeGrowthGlobal0X128 } = position.pool;
+  const { feeGrowthGlobal1X128 } = position.pool;
+  const { feeGrowthInside0LastX128 } = position;
+  const { feeGrowthInside1LastX128 } = position;
 
   const { token1, token0 } = position;
   const token0PriceUSD = token0.totalValueLockedUSD.div(
-    token0.totalValueLocked
+    token0.totalValueLocked,
   );
   const token1PriceUSD = token1.totalValueLockedUSD.div(
-    token1.totalValueLocked
+    token1.totalValueLocked,
   );
   const token0ValueLockedUSD = token0PriceUSD.multipliedBy(
-    position.depositedToken0
+    position.depositedToken0,
   );
   const token1ValueLockedUSD = token1PriceUSD.multipliedBy(
-    position.depositedToken1
+    position.depositedToken1,
   );
 
   const feesToken0 = feeGrowthGlobal0X128
-    .minus(feeGrowthOutside0X128_lower)
-    .minus(feeGrowthOutside0X128_upper)
+    .minus(feeGrowthOutside0X128Lower)
+    .minus(feeGrowthOutside0X128Upper)
     .minus(feeGrowthInside0LastX128)
     .div(2 ** 128)
     .multipliedBy(position.liquidity)
     .div(10 ** getDecimals(token0));
 
   const feesToken1 = feeGrowthGlobal1X128
-    .minus(feeGrowthOutside1X128_lower)
-    .minus(feeGrowthOutside1X128_upper)
+    .minus(feeGrowthOutside1X128Lower)
+    .minus(feeGrowthOutside1X128Upper)
     .minus(feeGrowthInside1LastX128)
     .div(2 ** 128)
     .multipliedBy(position.liquidity)
@@ -53,10 +53,10 @@ export function setSummary(position: Position) {
 
   if (position.liquidity.gt(0)) {
     const sqrtPriceA = new BigNumber(
-      1.0001 ** position.tickLower.tickIdx
+      1.0001 ** position.tickLower.tickIdx,
     ).squareRoot();
     const sqrtPriceB = new BigNumber(
-      1.0001 ** position.tickUpper.tickIdx
+      1.0001 ** position.tickUpper.tickIdx,
     ).squareRoot();
 
     token0Amount = position.liquidity
@@ -64,7 +64,7 @@ export function setSummary(position: Position) {
         sqrtPriceB
           .minus(position.pool.sqrtPrice.div(2 ** 96))
           .div(position.pool.sqrtPrice.div(2 ** 96))
-          .div(sqrtPriceB)
+          .div(sqrtPriceB),
       )
 
       .div(new BigNumber(10 ** token0.decimals));
@@ -73,7 +73,7 @@ export function setSummary(position: Position) {
       .div(new BigNumber(10 ** token1.decimals));
   }
 
-  position.summary = {
+  return {
     token0ValueLockedUSD,
     token1ValueLockedUSD,
     token0PriceUSD,

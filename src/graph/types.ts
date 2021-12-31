@@ -1,4 +1,18 @@
-import { BigNumber } from "bignumber.js";
+import { BigNumber } from 'bignumber.js';
+
+type PositionSummary = {
+  token0ValueLockedUSD: BigNumber;
+  token1ValueLockedUSD: BigNumber;
+  token0PriceUSD: BigNumber;
+  token1PriceUSD: BigNumber;
+  feesToken0: BigNumber;
+  feesToken1: BigNumber;
+  feesToken0USD: BigNumber;
+  feesToken1USD: BigNumber;
+  token0Amount: BigNumber;
+  token1Amount: BigNumber;
+};
+
 type Token = {
   symbol?: string;
   totalValueLocked?: BigNumber;
@@ -59,20 +73,13 @@ type Position = {
   summary?: PositionSummary;
 };
 
-type PositionSummary = {
-  token0ValueLockedUSD: BigNumber;
-  token1ValueLockedUSD: BigNumber;
-  token0PriceUSD: BigNumber;
-  token1PriceUSD: BigNumber;
-  feesToken0: BigNumber;
-  feesToken1: BigNumber;
-  feesToken0USD: BigNumber;
-  feesToken1USD: BigNumber;
-  token0Amount: BigNumber;
-  token1Amount: BigNumber;
-};
-
-type GraphObjects = 'Token' | 'Pool' | 'PoolDayData' | 'Tick' | 'Position' | 'Transaction';
+type GraphObjects =
+  | 'Token'
+  | 'Pool'
+  | 'PoolDayData'
+  | 'Tick'
+  | 'Position'
+  | 'Transaction';
 
 export type {
   Token,
@@ -82,5 +89,5 @@ export type {
   PositionSummary,
   Transaction,
   Tick,
-  GraphObjects
+  GraphObjects,
 };

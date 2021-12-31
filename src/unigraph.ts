@@ -1,19 +1,20 @@
+import { gql, GraphQLClient } from 'graphql-request';
 import {
   EthereumNetworkName,
   UniswapV3ConfigurationMap,
   UniswapV3Configuration,
-} from "./network";
-import { GraphObjects, Pool, Position } from "./graph/types";
-import { setSummary } from "./utils/position-summary";
-import { gql, GraphQLClient } from "graphql-request";
+} from './network';
+import { GraphObjects, Pool, Position } from './graph/types';
+import { getSummary } from './utils/position-summary';
 
 // graphql
-import poolsGet from "./graph/templates/pools-get";
-import positionsForAddress from "./graph/templates/positions-for-address";
-import { getMapper } from "./graph/type-mapper";
+import poolsGet from './graph/templates/pools-get';
+import positionsForAddress from './graph/templates/positions-for-address';
+import { getMapper } from './graph/type-mapper';
 
 class Unigraph {
   private configuration: UniswapV3Configuration;
+
   private client: GraphQLClient;
 
   constructor(props: {
@@ -23,7 +24,7 @@ class Unigraph {
   }) {
     const { network, configuration, fetch } = props;
     if (!network && !configuration) {
-      throw new Error("one of network or configuration must be provided");
+      throw new Error('one of network or configuration must be provided');
     }
     if (network) {
       this.configuration = UniswapV3ConfigurationMap[network];
@@ -41,17 +42,19 @@ class Unigraph {
       gql`
         ${positionsForAddress}
       `,
-      { address }
+      { address },
     );
-    const positions = result.positions.map((p) =>
-      getMapper<Position>("Position")(p)
-    );
+    const positions = result.positions.map((p) => getMapper<Position>('Position')(p));
     if (!summaries) {
       return positions;
     }
     // TODO: find a better way
     // const _result = clone(result);
-    positions.forEach(setSummary);
+    positions.forEach((pos) => {
+      const summary = getSummary(pos);
+      // eslint-disable-next-line no-param-reassign
+      pos.summary = summary;
+    });
     return positions;
     // }
   }
@@ -61,9 +64,9 @@ class Unigraph {
       gql`
         ${poolsGet}
       `,
-      { pageSize }
+      { pageSize },
     );
-    return result.pools.map((pool) => getMapper<Pool>("Pool")(pool));
+    return result.pools.map((pool) => getMapper<Pool>('Pool')(pool));
   }
 
   /**
@@ -85,7 +88,7 @@ class Unigraph {
       gql`
         ${query}
       `,
-      variables
+      variables,
     );
     const [firstKey] = Object.keys(result);
     if (result[firstKey] instanceof Array) {
