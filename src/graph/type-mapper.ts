@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax,no-use-before-define */
 import BigNumber from 'bignumber.js';
 import {
   Pool,
@@ -49,8 +50,10 @@ const mappers = {
 
 export function getMapper<Type extends Pool | Token | Position>(
   key: keyof typeof mappers,
+  /* eslint-disable-next-line no-unused-vars */
 ): (source: Type) => Type {
-  return mappers[key] as any as (Type) => Type;
+  /* eslint-disable-next-line no-unused-vars */
+  return mappers[key] as any as (source: Type) => Type;
 }
 
 const TypeFieldParsers = {
