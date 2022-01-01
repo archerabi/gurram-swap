@@ -9,11 +9,11 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - run: npm install
       - run: npm test
-  int:
+  Lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - run: npm install
-      - run: npm lint
+      - run: npm run lint
