@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import { BigNumber } from 'bignumber.js';
 
 type PositionSummary = {
