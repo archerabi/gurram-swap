@@ -62,6 +62,12 @@ const pools = await underTest.rawQuery<Pool[]>({ query, mapper: "Pool" });
 
 ## Release History
 
+* 0.1.4
+    * Fix for rawQuery variables parameter
+
+* 0.1.3
+    * Unigraph.rawQuery
+
 * 0.1.0
     * The first proper release
 
