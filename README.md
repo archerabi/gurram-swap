@@ -56,6 +56,9 @@ const pools = await underTest.rawQuery<Pool[]>({ query, mapper: "Pool" });
 
 ``` 
 
+## Known issues
+* Position summary is in alpha. When liquidity is added or removed, position summary will be incorrect.
+* Q128.128 resolution of `feeGrowthX` is probably innacurate in some cases. 
 
 ## Release History
 

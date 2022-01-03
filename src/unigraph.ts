@@ -84,7 +84,7 @@ class Unigraph {
     mapper,
   }: {
     query: string;
-    variables?: { string: any };
+    variables?: Record<string, any>
     mapper: GraphObjects;
   }): Promise<T> {
     const result = await this.client.request<T>(
