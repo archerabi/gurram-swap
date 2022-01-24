@@ -5,17 +5,21 @@ export default `query getPositions($address: String!) {
     feeGrowthInside1LastX128
     depositedToken0
     depositedToken1
+    withdrawnToken0
+    withdrawnToken1
     token0 {
       symbol
       totalValueLocked
       totalValueLockedUSD
       decimals
+      derivedETH
     }
     token1 {
       symbol
       totalValueLocked
       totalValueLockedUSD
       decimals
+      derivedETH
     }
     tickLower {
       price0

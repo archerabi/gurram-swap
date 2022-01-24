@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax,no-use-before-define */
-import BigNumber from 'bignumber.js';
+import BigNumber from "bignumber.js";
 import {
   Pool,
   Position,
@@ -7,10 +7,11 @@ import {
   Token,
   Transaction,
   PoolDayData,
+  PoolHourData,
   GraphObjects,
   TokenDayData,
-} from './types';
-import { fromTwosComplement } from '../utils/twos-complement';
+} from "./types";
+import { fromTwosComplement } from "../utils/twos-complement";
 
 function read(val: string) {
   return new BigNumber(val);
@@ -22,6 +23,10 @@ function readNumber(val: string) {
 
 function readSigned256(val: string) {
   return fromTwosComplement(new BigNumber(val), 256);
+}
+
+function readDate(val: string) {
+  return new Date(parseInt(val) * 1000);
 }
 
 function createMapper<T>(mapperType: GraphObjects) {
@@ -39,17 +44,18 @@ function createMapper<T>(mapperType: GraphObjects) {
 }
 
 const mappers = {
-  Pool: createMapper<Pool>('Pool'),
-  Token: createMapper<Token>('Token'),
-  PoolDayData: createMapper<PoolDayData>('PoolDayData'),
-  Position: createMapper<Position>('Position'),
-  Tick: createMapper<Tick>('Tick'),
-  Transaction: createMapper<Transaction>('Transaction'),
-  TokenDayData: createMapper<TokenDayData>('TokenDayData'),
+  Pool: createMapper<Pool>("Pool"),
+  Token: createMapper<Token>("Token"),
+  PoolDayData: createMapper<PoolDayData>("PoolDayData"),
+  PoolHourData: createMapper<PoolDayData>('PoolHourData'),
+  Position: createMapper<Position>("Position"),
+  Tick: createMapper<Tick>("Tick"),
+  Transaction: createMapper<Transaction>("Transaction"),
+  TokenDayData: createMapper<TokenDayData>("TokenDayData"),
 };
 
 export function getMapper<Type extends Pool | Token | Position>(
-  key: keyof typeof mappers,
+  key: keyof typeof mappers
   /* eslint-disable-next-line no-unused-vars */
 ): (source: Type) => Type {
   /* eslint-disable-next-line no-unused-vars */
@@ -122,6 +128,7 @@ const TypeFieldParsers = {
       feeGrowthGlobal1X128: readSigned256,
       sqrtPrice: read,
       poolDayData: (val: PoolDayData[]) => val.map(mappers.PoolDayData),
+      poolHourData: (val: PoolHourData[]) => val.map(mappers.PoolHourData),
       token0: mappers.Token,
       token1: mappers.Token,
       feeTier: readNumber,
@@ -148,6 +155,16 @@ const TypeFieldParsers = {
   PoolDayData: {
     root: mappers.PoolDayData,
     fields: {
+      date: readDate,
+      feesUSD: read,
+      volumeUSD: read,
+      tvlUSD: read,
+    },
+  },
+  PoolHourData: {
+    root: mappers.PoolHourData,
+    fields: {
+      periodStartUnix: readDate,
       feesUSD: read,
       volumeUSD: read,
       tvlUSD: read,
@@ -168,6 +185,8 @@ const TypeFieldParsers = {
       feeGrowthInside1LastX128: readSigned256,
       depositedToken0: read,
       depositedToken1: read,
+      withdrawnToken0: read,
+      withdrawnToken1: read,
     },
   },
 };

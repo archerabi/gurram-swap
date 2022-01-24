@@ -36,16 +36,24 @@ type Token = {
   totalValueLocked?: BigNumber;
   totalValueLockedUSD?: BigNumber;
   decimals?: number;
+  derivedETH?: BigNumber;
 };
 
 type Transaction = {
   timestamp: Date;
 };
 type PoolDayData = {
-  date?: number;
-  feesUSD?: number;
-  tvlUSD?: number;
-  volumeUSD?: number;
+  date?: Date;
+  feesUSD?: BigNumber;
+  tvlUSD?: BigNumber;
+  volumeUSD?: BigNumber;
+};
+
+type PoolHourData = {
+  periodStartUnix?: Date;
+  feesUSD?: BigNumber;
+  tvlUSD?: BigNumber;
+  volumeUSD?: BigNumber;
 };
 
 type Pool = {
@@ -54,6 +62,7 @@ type Pool = {
   token1?: Token;
   feeTier?: number;
   poolDayData?: PoolDayData[];
+  poolHourData?: PoolHourData[];
   token0Price?: BigNumber;
   token1Price?: BigNumber;
   feeGrowthGlobal0X128?: BigNumber;
@@ -79,7 +88,6 @@ type Pool = {
   totalValueLockedUSDUntracked: BigNumber;
   liquidityProviderCount: number;
   // TODO
-  // poolHourData: [PoolHourData!]!
   // mints: [Mint!]!
   // burns: [Burn!]!
   // swaps: [Swap!]!
@@ -124,12 +132,14 @@ type GraphObjects =
   | 'Tick'
   | 'Position'
   | 'Transaction'
-  | 'TokenDayData';
+  | 'TokenDayData'
+  | 'PoolHourData';
 
 export type {
   Token,
   Pool,
   PoolDayData,
+  PoolHourData,
   Position,
   PositionSummary,
   Transaction,
